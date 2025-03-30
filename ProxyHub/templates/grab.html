@@ -1,13 +1,13 @@
 {%extends "layout.html"%}
 {%block content%}
-<link rel="stylesheet" href="{{url_for('static', filename='grap.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='grab.css')}}">
 
 <div class="container">
     <div class="card shadow">
         <center>
-            <div class="card-title mt-4">Grap Proxies</div>
+            <div class="card-title mt-4">Grab Proxies</div>
             <div class="fluid-container mt-5">
-                <textarea name="proxies" id="proxies-textarea" placeholder="Click 'Grap Proxies' to start grapping!"></textarea>
+                <textarea name="proxies" id="proxies-textarea" placeholder="Click 'Grab Proxies' to start grabbing!"></textarea>
             </div>
             <div class="fluid-container mt-4">
                 <select name="" id="protocol">
@@ -28,8 +28,8 @@
                 <input type="range" id="rangeInput" min="20" max="20000" step="1" value="50" oninput="updateValue(this.value)">
             </div>
             <div>
-                <button href="" class="btn m-5" onclick="Grap()" id="grap">Grap Proxies</button>
-                <div id="grap-loader" class="loader" style="display: none; margin-top: 1rem;"></div>
+                <button href="" class="btn m-5" onclick="Grab()" id="grab">Grab Proxies</button>
+                <div id="grab-loader" class="loader" style="display: none; margin-top: 1rem;"></div>
                 <button href="" class="btn m-5" onclick="Check()" id="check">Check Proxies</button>
                 <div id="check-loader" class="loader" style="display: none; margin-top: 1rem;"></div>
             </div>
@@ -37,33 +37,33 @@
     </div>
 </div>
 <script>
-    function Grap(){
-        document.getElementById("grap-loader").style.display = "block";
-        document.getElementById("grap").style.display = "none";
+    function Grab(){
+        document.getElementById("grab-loader").style.display = "block";
+        document.getElementById("grab").style.display = "none";
         const protocol = document.getElementById('protocol').value;
         const anonymity = document.getElementById('anonymity').value;
         const range = document.getElementById('rangeInput').value;
-        fetch(`/api/grap?protocol=${encodeURIComponent(protocol)}&anonymity=${encodeURIComponent(anonymity)}&range=${encodeURIComponent(range)}`, {
+        fetch(`/api/grab?protocol=${encodeURIComponent(protocol)}&anonymity=${encodeURIComponent(anonymity)}&range=${encodeURIComponent(range)}`, {
             method: "POST"
         })
         .then(response => {
             if (!response.ok) {
-                document.getElementById("grap-loader").style.display = "none";
-                document.getElementById("grap").style.display = "block";
+                document.getElementById("grab-loader").style.display = "none";
+                document.getElementById("grab").style.display = "block";
                 throw new Error('Error happened while trying to grab proxies, please contact website administrator!');
             }
             return response.json();
         })
         .then(data => {
             document.getElementById('proxies-textarea').value = data.join('\n');
-            document.getElementById("grap-loader").style.display = "none";
-            document.getElementById("grap").style.display = "block";
+            document.getElementById("grab-loader").style.display = "none";
+            document.getElementById("grab").style.display = "block";
             
         })
         .catch(error => {
             alert('Error happened while trying to grab proxies, please contact website administrator!');
-            document.getElementById("grap-loader").style.display = "none";
-            document.getElementById("grap").style.display = "block";
+            document.getElementById("grab-loader").style.display = "none";
+            document.getElementById("grab").style.display = "block";
         });
 
     }
