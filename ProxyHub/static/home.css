@@ -36,15 +36,3 @@ a:hover{
     background-color: #2323FF;
     color: #101010;
 }
-
-@media screen and (max-width: 768px){
-    .brand{
-        font-size: 1.2rem;
-    }
-    .brand-span{
-        padding: 1.5rem;
-    }
-    .brand-span2{
-        padding: 1.5rem;
-    }
-}
