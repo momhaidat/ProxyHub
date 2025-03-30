@@ -2,21 +2,6 @@ from flask import render_template,request
 import requests
 from ProxyHub import app
 
-def check_http_proxies(proxy):
-    check_url = "http://httpbin.org/ip"
-    proxy_dict = {
-        'http': f'http://{proxy}',
-        'https': f'http://{proxy}'
-    }
-    try:
-        status = requests.get(check_url, proxies=proxy_dict, timeout=5).status_code
-        if status == 200:
-            return True
-        else:
-            return False
-    except:
-        pass
-
 def check_proxies(protocol,proxy):
     check_url = "http://httpbin.org/ip"
     proxy_dict = {
@@ -118,17 +103,8 @@ def api_check():
     valid_proxies = []
     if not proxies:
         return ['There is no proxies to check!']
-    if protocol == 'http':
-        for proxy in proxies:
-            status = check_http_proxies(proxy)
-            if status:
-                valid_proxies.append(proxy)
-    elif protocol == 'socks4':
-        for proxy in proxies:
-            status = check_proxies(protocol,proxy)
-            if status:
-                valid_proxies.append(proxy)
-    elif protocol == 'socks5':
+    valid_protocols = ['http','socks4','socks5']
+    if protocol in valid_protocols:
         for proxy in proxies:
             status = check_proxies(protocol,proxy)
             if status:
