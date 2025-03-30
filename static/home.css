@@ -1,0 +1,50 @@
+a{
+    text-decoration: none;
+}
+
+a:hover{
+    filter: drop-shadow(0 0 15px #2323FF);
+    transition: ease-in-out 0.3s ;
+}
+
+.main{
+    color: #2323FF;
+}
+
+.text-container {
+    margin-top: 3rem;
+    word-wrap: break-word;
+    width: 100%;
+    max-width: 50rem;
+}
+
+.description{
+    color: #2323ff94;
+    font-size: 1.2rem;
+}
+
+.btn{
+    border: 1px solid #2323FF;
+    color: azure;
+    font-weight: bold;
+    text-align: center;
+    width: 10rem;
+    height: 2.5rem;
+}
+
+.btn:hover{
+    background-color: #2323FF;
+    color: #101010;
+}
+
+@media screen and (max-width: 768px){
+    .brand{
+        font-size: 1.2rem;
+    }
+    .brand-span{
+        padding: 1.5rem;
+    }
+    .brand-span2{
+        padding: 1.5rem;
+    }
+}
