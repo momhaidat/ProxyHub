@@ -1,0 +1,107 @@
+{%extends "layout.html"%}
+{%block content%}
+<link rel="stylesheet" href="{{url_for('static', filename='grap.css')}}">
+
+<div class="container">
+    <div class="card shadow">
+        <center>
+            <div class="card-title mt-4">Grap Proxies</div>
+            <div class="fluid-container mt-5">
+                <textarea name="proxies" id="proxies-textarea" placeholder="Click 'Grap Proxies' to start grapping!"></textarea>
+            </div>
+            <div class="fluid-container mt-4">
+                <select name="" id="protocol">
+                    <option value="" disabled selected="true">Select Protocol</option>
+                    <option value="all">All Protocols</option>
+                    <option value="http">HTTP</option>
+                    <option value="socks4">Socks4</option>
+                    <option value="socks5">Socks5</option>
+                </select>
+                <select name="" id="anonymity">
+                    <option value="" disabled selected="true">Select Anonymity</option>
+                    <option value="all">All Anonymity</option>
+                    <option value="Elite">Elite</option>
+                    <option value="Anonymous">Anonymous</option>
+                    <option value="Transparent">Transparent</option>
+                </select>
+                <label for="rangeInput">Set Timeout : <span id="rangeValue">20ms</span></label>
+                <input type="range" id="rangeInput" min="20" max="20000" step="1" value="50" oninput="updateValue(this.value)">
+            </div>
+            <div>
+                <button href="" class="btn m-5" onclick="Grap()" id="grap">Grap Proxies</button>
+                <div id="grap-loader" class="loader" style="display: none; margin-top: 1rem;"></div>
+                <button href="" class="btn m-5" onclick="Check()" id="check">Check Proxies</button>
+                <div id="check-loader" class="loader" style="display: none; margin-top: 1rem;"></div>
+            </div>
+        </center>
+    </div>
+</div>
+<script>
+    function Grap(){
+        document.getElementById("grap-loader").style.display = "block";
+        document.getElementById("grap").style.display = "none";
+        const protocol = document.getElementById('protocol').value;
+        const anonymity = document.getElementById('anonymity').value;
+        const range = document.getElementById('rangeInput').value;
+        fetch(`/api/grap?protocol=${encodeURIComponent(protocol)}&anonymity=${encodeURIComponent(anonymity)}&range=${encodeURIComponent(range)}`, {
+            method: "POST"
+        })
+        .then(response => {
+            if (!response.ok) {
+                document.getElementById("grap-loader").style.display = "none";
+                document.getElementById("grap").style.display = "block";
+                throw new Error('Error happened while trying to grab proxies, please contact website administrator!');
+            }
+            return response.json();
+        })
+        .then(data => {
+            document.getElementById('proxies-textarea').value = data.join('\n');
+            document.getElementById("grap-loader").style.display = "none";
+            document.getElementById("grap").style.display = "block";
+            
+        })
+        .catch(error => {
+            alert('Error happened while trying to grab proxies, please contact website administrator!');
+            document.getElementById("grap-loader").style.display = "none";
+            document.getElementById("grap").style.display = "block";
+        });
+
+    }
+    function Check(){
+        document.getElementById("check-loader").style.display = "block";
+        document.getElementById("check").style.display = "none";
+        let proxiesArray = document.getElementById('proxies-textarea').value.split('\n');
+        const protocol = document.getElementById('protocol').value;
+        fetch(`/api/check?protocol=${encodeURIComponent(protocol)}`, {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                proxies: proxiesArray
+            })
+        })
+        .then(response => {
+        if (!response.ok) {
+            document.getElementById("check-loader").style.display = "none";
+            document.getElementById("check").style.display = "block";
+            throw new Error('Error happened while checking proxies, please contact website administrator!');
+        }
+        return response.json();
+        })
+        .then(data => {
+            document.getElementById('proxies-textarea').value = data.join('\n');
+            document.getElementById("check-loader").style.display = "none";
+            document.getElementById("check").style.display = "block";
+        })
+        .catch(error => {
+            alert('Error happened while checking proxies, please contact website administrator!');
+            document.getElementById("check-loader").style.display = "none";
+            document.getElementById("check").style.display = "block";
+        })
+    }
+    function updateValue(val) {
+        document.getElementById('rangeValue').textContent = val+'ms';
+    }
+</script>
+{%endblock%}
