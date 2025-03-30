@@ -22,12 +22,12 @@ def check_proxies(protocol,proxy):
 def home():
     return render_template("home.html",title="Home Page")
 
-@app.route("/grap",methods=["GET","POST"])
-def grap():
-    return render_template("grap.html",title="Grap Proxies")
+@app.route("/grab",methods=["GET","POST"])
+def grab():
+    return render_template("grab.html",title="Grab Proxies")
 
-@app.route("/api/grap",methods=["GET","POST"])
-def api_grap():
+@app.route("/api/grab",methods=["GET","POST"])
+def api_grab():
     array = [1,2,3,4,5,6,7,8,9,0]
     protocol = request.args.get('protocol')
     anonymity = request.args.get('anonymity')
@@ -87,7 +87,7 @@ def api_grap():
         for proxy in response:
             proxies.append(proxy)
     except:
-        return ['Failed to grap proxies, please contact website administrator to solve the problem!']
+        return ['Failed to grab proxies, please contact website administrator to solve the problem!']
     if not proxies:
         return ['There is no proxies applicable to your preferences now, try again after 5 minutes please!']
     return proxies
