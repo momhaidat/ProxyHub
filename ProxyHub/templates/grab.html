@@ -38,8 +38,14 @@
 </div>
 <script>
     function Grab(){
-        document.getElementById("grab-loader").style.display = "block";
+        let grabLoader = document.getElementById("grab-loader");
         document.getElementById("grab").style.display = "none";
+        let mediaQuery = window.matchMedia("(max-width: 768px)");
+        if (mediaQuery.matches) {
+            grabLoader.style.display = "inline-block";
+        } else {
+            grabLoader.style.display = "block";
+        }
         const protocol = document.getElementById('protocol').value;
         const anonymity = document.getElementById('anonymity').value;
         const range = document.getElementById('rangeInput').value;
@@ -48,27 +54,52 @@
         })
         .then(response => {
             if (!response.ok) {
-                document.getElementById("grab-loader").style.display = "none";
-                document.getElementById("grab").style.display = "block";
+                let grabLoader = document.getElementById("grab-loader");
+                let mediaQuery = window.matchMedia("(max-width: 768px)");
+                if (mediaQuery.matches) {
+                    grabLoader.style.display = "none";
+                    document.getElementById("grab").style.display = "block";
+                } else {
+                    document.getElementById("grab").style.display = "inline-block";
+                }
+                
                 throw new Error('Error happened while trying to grab proxies, please contact website administrator!');
             }
             return response.json();
         })
         .then(data => {
             document.getElementById('proxies-textarea').value = data.join('\n');
-            document.getElementById("grab-loader").style.display = "none";
-            document.getElementById("grab").style.display = "block";
+            let grabLoader = document.getElementById("grab-loader");
+            let mediaQuery = window.matchMedia("(max-width: 768px)");
+            if (mediaQuery.matches) {
+                grabLoader.style.display = "none";
+                document.getElementById("grab").style.display = "block";
+            } else {
+                document.getElementById("grab").style.display = "inline-block";
+            }
             
         })
         .catch(error => {
             alert('Error happened while trying to grab proxies, please contact website administrator!');
-            document.getElementById("grab-loader").style.display = "none";
-            document.getElementById("grab").style.display = "block";
+            let checkLoader = document.getElementById("check-loader");
+            checkLoader.style.display = "none";
+            let mediaQuery = window.matchMedia("(max-width: 768px)");
+            if (mediaQuery.matches) {
+                document.getElementById("check").style.display = "block";
+            } else {
+                document.getElementById("check").style.display = "inline-block";
+            }
         });
 
     }
     function Check(){
-        document.getElementById("check-loader").style.display = "block";
+        let checkLoader = document.getElementById("check-loader");
+        let mediaQuery = window.matchMedia("(max-width: 768px)");
+        if (mediaQuery.matches) {
+            checkLoader.style.display = "block";
+        } else {
+            checkLoader.style.display = "inline-block";
+        }
         document.getElementById("check").style.display = "none";
         let proxiesArray = document.getElementById('proxies-textarea').value.split('\n');
         const protocol = document.getElementById('protocol').value;
@@ -82,22 +113,41 @@
             })
         })
         .then(response => {
-        if (!response.ok) {
-            document.getElementById("check-loader").style.display = "none";
-            document.getElementById("check").style.display = "block";
+            if (!response.ok) {
+                let checkLoader = document.getElementById("check-loader");
+                checkLoader.style.display = "none";
+                let mediaQuery = window.matchMedia("(max-width: 768px)");
+                if (mediaQuery.matches) {
+                    document.getElementById("check").style.display = "block";
+                } else {
+                    document.getElementById("check").style.display = "inline-block";
+                }
+            
             throw new Error('Error happened while checking proxies, please contact website administrator!');
         }
         return response.json();
         })
         .then(data => {
             document.getElementById('proxies-textarea').value = data.join('\n');
-            document.getElementById("check-loader").style.display = "none";
-            document.getElementById("check").style.display = "block";
+            let checkLoader = document.getElementById("check-loader");
+            checkLoader.style.display = "none";
+            let mediaQuery = window.matchMedia("(max-width: 768px)");
+            if (mediaQuery.matches) {
+                document.getElementById("check").style.display = "block";
+            } else {
+                document.getElementById("check").style.display = "inline-block";
+            }
         })
         .catch(error => {
             alert('Error happened while checking proxies, please contact website administrator!');
-            document.getElementById("check-loader").style.display = "none";
-            document.getElementById("check").style.display = "block";
+            let checkLoader = document.getElementById("check-loader");
+            checkLoader.style.display = "none";
+            let mediaQuery = window.matchMedia("(max-width: 768px)");
+            if (mediaQuery.matches) {
+                document.getElementById("check").style.display = "block";
+            } else {
+                document.getElementById("check").style.display = "inline-block";
+            }
         })
     }
     function updateValue(val) {
