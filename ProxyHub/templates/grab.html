@@ -81,13 +81,13 @@
         })
         .catch(error => {
             alert('Error happened while trying to grab proxies, please contact website administrator!');
-            let checkLoader = document.getElementById("check-loader");
-            checkLoader.style.display = "none";
+            let grabLoader = document.getElementById("grab-loader");
+            grabLoader.style.display = "none";
             let mediaQuery = window.matchMedia("(max-width: 768px)");
             if (mediaQuery.matches) {
-                document.getElementById("check").style.display = "block";
+                document.getElementById("grab").style.display = "block";
             } else {
-                document.getElementById("check").style.display = "inline-block";
+                document.getElementById("grab").style.display = "inline-block";
             }
         });
 
