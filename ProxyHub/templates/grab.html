@@ -42,9 +42,9 @@
         document.getElementById("grab").style.display = "none";
         let mediaQuery = window.matchMedia("(max-width: 768px)");
         if (mediaQuery.matches) {
-            grabLoader.style.display = "inline-block";
-        } else {
             grabLoader.style.display = "block";
+        } else {
+            grabLoader.style.display = "inline-block";
         }
         const protocol = document.getElementById('protocol').value;
         const anonymity = document.getElementById('anonymity').value;
