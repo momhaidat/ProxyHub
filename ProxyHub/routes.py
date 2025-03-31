@@ -111,4 +111,6 @@ def api_check():
                 valid_proxies.append(proxy)
     else:
         return ['Invlaid protocol type, please choose the right proxies protocol!']
+    if not valid_proxies:
+        return ['No valid proxies were detected!']
     return valid_proxies
